@@ -10,8 +10,13 @@
 import UIKit
 import Parse
 
-class ViewController: UIViewController {
+var currentUser = PFUser.currentUser()
 
+class ViewController: UIViewController, UITextFieldDelegate {
+
+    @IBOutlet weak var username: UITextField!
+    @IBOutlet weak var password: UITextField!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -22,6 +27,32 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    @IBAction func logIn(sender: AnyObject) {
+        if (username.text != "" && password.text != "") {
+            PFUser.logInWithUsernameInBackground(username.text!, password: password.text!) {
+                (user: PFUser?, error: NSError?) -> Void in
+                if user != nil {
+                    currentUser = PFUser.currentUser()
+                    self.performSegueWithIdentifier("logInToNetIncome", sender: self)
+                } else {
+                    //self.errorMessage.text = "Make sure you are using the correct username and password"
+                }
+            }
+        } else {
+            //errorMessage.text = "Make sure all fields have values!"
+        }
+        self.view.endEditing(true)
+    }
+    
     @IBAction func logOutUnwind(segue: UIStoryboardSegue) {
+        PFUser.logOutInBackground()
+        currentUser = PFUser.currentUser()
+        username.text = ""
+        password.text = ""
+        //errorMessage.text = ""
+    }
+    
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?){
+        self.view.endEditing(true)
     }
 }
