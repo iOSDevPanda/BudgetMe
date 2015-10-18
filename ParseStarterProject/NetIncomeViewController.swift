@@ -9,6 +9,13 @@
 import UIKit
 
 class NetIncomeViewController: UIViewController {
+    @IBOutlet weak var moneyIn: UILabel!
+    @IBOutlet weak var moneyOut: UILabel!
+    @IBOutlet weak var moneyNet: UILabel!
+    
+    var totIn:Int = 1000
+    var totExp:Int = 600
+    var net:Int = 0
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,6 +30,24 @@ class NetIncomeViewController: UIViewController {
     
     @IBAction func netIncomeUnwind(segue: UIStoryboardSegue) {
     }
+    
+    @IBAction func calculateNet(sender: AnyObject) {
+        // Display the incomes and the expenses 
+        moneyIn.text = "$\(totIn)"
+        moneyOut.text = "$\(totExp)"
+        
+        // subtract outflows from inflows
+        net = totIn - totExp
+        
+        moneyNet.text = "$\(net)"
+        
+        if(net >= 0) {
+            moneyNet.textColor = UIColor.redColor()
+        } else if(net < 0) {
+            moneyNet.textColor = UIColor.greenColor()
+        }
+    }
+    
     
     /*
     // MARK: - Navigation
