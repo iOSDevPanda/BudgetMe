@@ -32,6 +32,7 @@ class NetIncomeViewController: UIViewController {
     var rent:Int = 0
     var gas:Int = 0
     var tuition:Int = 0
+    var onetime:Int = 0
 
 
     override func viewDidLoad() {
@@ -50,14 +51,15 @@ class NetIncomeViewController: UIViewController {
     
     
     @IBAction func calculateNet(sender: AnyObject) {
-        queryDB()
+        queryIncomes()
+        queryExpenses()
         
         // Display the incomes and the expenses
         moneyIn.text = "$\(totIn)"
         moneyOut.text = "$\(totExp)"
         
         // subtract outflows from inflows
-        net = totIn - totExp
+        net = totIn - totExp + onetime
         
         moneyNet.text = "$\(net)"
         
@@ -68,8 +70,8 @@ class NetIncomeViewController: UIViewController {
         }
     }
 
-    // general function to query the database
-    func queryDB() {
+    // general function to query incomes
+    func queryIncomes() {
         let in_query = PFQuery(className: "Incomes")
         in_query.whereKey("username", equalTo:(currentUser?.username)!)
         do {
@@ -87,8 +89,13 @@ class NetIncomeViewController: UIViewController {
         } catch {
             //
         }
+    }
+    
+    // general function query expenses
+    func queryExpenses() {
         
         let exp_query = PFQuery(className: "Expenses")
+        exp_query.whereKey("username", equalTo:(currentUser?.username)!)
         do {
             let userArray = try exp_query.findObjects()
             user = userArray[0]
@@ -114,7 +121,23 @@ class NetIncomeViewController: UIViewController {
         } catch {
             //
         }
+        
+
     }
+    
+    // Should probably figure this out
+    //        let onetime_query = PFQuery(className: "OneTimes")
+    //        onetime_query.whereKey("username", equalTo:(currentUser?.username)!)
+    //        do {
+    //            let userArray = try onetime_query.findObjects()
+    //            user = userArray[0]
+    //            let onetmp = user["oneTime"]
+    //            if(onetmp != nil) {
+    //                onetime = Int(onetmp as! NSNumber)
+    //            }
+    //        } catch {
+    //            //
+    //        }
     
     
     /*
