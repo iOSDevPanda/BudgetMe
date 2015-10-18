@@ -7,13 +7,30 @@
 //
 
 import UIKit
+import Parse
 
 class IncomesViewController: UIViewController {
 
+    @IBOutlet weak var salary: UITextField!
+    @IBOutlet weak var scholarships: UITextField!
+
+    private var user: PFObject!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        //query for current values, esle set 0
+        let query = PFQuery(className: "Incomes")
+        query.whereKey("username", equalTo: (currentUser?.username)!)
+        do {
+            let userArray = try query.findObjects()
+            user = userArray[0]
+            salary.text = String(user["salaryAnnual"])
+            scholarships.text = String(user["scholarshipsAnnual"])
+        }
+        catch {
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -21,6 +38,28 @@ class IncomesViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    @IBAction func updateIncome(sender: AnyObject) {
+        if (salary.text! != "") {
+            user["salaryAnnual"] = Int(salary.text!)
+        }
+        if (scholarships.text! != "") {
+            user["scholarshipsAnnual"] = Int(scholarships.text!)
+        }
+        user.saveInBackgroundWithBlock {
+            (success: Bool, error:NSError?) -> Void in
+            if(success) {
+                print("Saved")
+            }
+            else {
+                print("Error")
+            }
+        }
+    }
+
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?){
+        self.view.endEditing(true)
+    }
+
 
     /*
     // MARK: - Navigation
@@ -31,5 +70,4 @@ class IncomesViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
-
 }

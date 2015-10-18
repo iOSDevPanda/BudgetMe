@@ -45,6 +45,8 @@ class CreateAccountViewController: UIViewController, UITextFieldDelegate {
                 
                 if (error == nil) {
                     self.validSignUp = true
+                    self.createIncomesRow()
+                    self.createExpensesRow()
                     PFUser.logInWithUsernameInBackground(self.username.text!, password: self.password.text!) {
                         (user: PFUser?, error: NSError?) -> Void in
                         currentUser = PFUser.currentUser()
@@ -64,6 +66,39 @@ class CreateAccountViewController: UIViewController, UITextFieldDelegate {
         }
         
         self.view.endEditing(true)
+    }
+    
+    func createIncomesRow() {
+        let incomes = PFObject(className: "Incomes")
+        incomes["username"] = username.text!
+        incomes["salaryAnnual"] = 0
+        incomes["scholarshipsAnnual"] = 0
+        incomes.saveInBackgroundWithBlock {
+            (success: Bool, error:NSError?) -> Void in
+            if(success) {
+                print("Saved")
+            }
+            else {
+                print("Error")
+            }
+        }
+    }
+    func createExpensesRow() {
+        let incomes = PFObject(className: "Expenses")
+        incomes["username"] = username.text!
+        incomes["gasAnnual"] = 0
+        incomes["foodAnnual"] = 0
+        incomes["tuitionAnnual"] = 0
+        incomes["rentAnnual"] = 0
+        incomes.saveInBackgroundWithBlock {
+            (success: Bool, error:NSError?) -> Void in
+            if(success) {
+                print("Saved")
+            }
+            else {
+                print("Error")
+            }
+        }
     }
 
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?){
