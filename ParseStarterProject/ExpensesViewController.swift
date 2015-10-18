@@ -42,7 +42,6 @@ class ExpensesViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    
     @IBAction func updateExpenses(sender: AnyObject) {
         if (food.text! != "") {
             user["foodAnnual"] = Int(food.text!)
