@@ -36,10 +36,12 @@ class ViewController: UIViewController, UITextFieldDelegate {
                     self.performSegueWithIdentifier("logInToNetIncome", sender: self)
                 } else {
                     //self.errorMessage.text = "Make sure you are using the correct username and password"
+                    print("Make sure you are using the correct username and password")
                 }
             }
         } else {
             //errorMessage.text = "Make sure all fields have values!"
+            print("Make sure all fields have values!")
         }
         self.view.endEditing(true)
     }
