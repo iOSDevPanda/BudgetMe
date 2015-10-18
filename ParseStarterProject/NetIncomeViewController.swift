@@ -7,15 +7,32 @@
 //
 
 import UIKit
+import Parse
 
 class NetIncomeViewController: UIViewController {
     @IBOutlet weak var moneyIn: UILabel!
     @IBOutlet weak var moneyOut: UILabel!
     @IBOutlet weak var moneyNet: UILabel!
     
-    var totIn:Int = 1000
-    var totExp:Int = 600
+    // Parse Object
+    private var user: PFObject!
+    
+    // Quick testing with hardcoded values
+//    var totIn:Int = 1000
+//    var totExp:Int = 600
+//    var net:Int = 0
+    
+    var totIn:Int = 0
+    var totExp:Int = 0
     var net:Int = 0
+    
+    var sal:Int = 0
+    var schol:Int = 0
+    var food:Int = 0
+    var rent:Int = 0
+    var gas:Int = 0
+    var tuition:Int = 0
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,8 +48,11 @@ class NetIncomeViewController: UIViewController {
     @IBAction func netIncomeUnwind(segue: UIStoryboardSegue) {
     }
     
+    
     @IBAction func calculateNet(sender: AnyObject) {
-        // Display the incomes and the expenses 
+        queryDB()
+        
+        // Display the incomes and the expenses
         moneyIn.text = "$\(totIn)"
         moneyOut.text = "$\(totExp)"
         
@@ -42,9 +62,57 @@ class NetIncomeViewController: UIViewController {
         moneyNet.text = "$\(net)"
         
         if(net >= 0) {
-            moneyNet.textColor = UIColor.redColor()
-        } else if(net < 0) {
             moneyNet.textColor = UIColor.greenColor()
+        } else if(net < 0) {
+            moneyNet.textColor = UIColor.redColor()
+        }
+    }
+
+    // general function to query the database
+    func queryDB() {
+        let in_query = PFQuery(className: "Incomes")
+        in_query.whereKey("username", equalTo:(currentUser?.username)!)
+        do {
+            let userArray = try in_query.findObjects()
+            user = userArray[0]
+            let saltmp = user["salaryAnnual"]
+            if(saltmp != nil) {
+                sal = Int(saltmp as! NSNumber)
+            }
+            let scholtmp = user["scholarshipsAnnual"]
+            if(scholtmp != nil) {
+                schol = Int(scholtmp as! NSNumber)
+            }
+            totIn = sal + schol
+        } catch {
+            //
+        }
+        
+        let exp_query = PFQuery(className: "Expenses")
+        do {
+            let userArray = try exp_query.findObjects()
+            user = userArray[0]
+            let foodtmp = user["foodAnnual"]
+            if(foodtmp != nil) {
+                food = Int(foodtmp as! NSNumber)
+            }
+            let renttmp = user["rentAnnual"]
+            if(renttmp != nil) {
+                food = Int(renttmp as! NSNumber)
+            }
+            let gastmp = user["gasAnnual"]
+            if(gastmp != nil) {
+                food = Int(gastmp as! NSNumber)
+            }
+            let tuitiontmp = user["tuitionAnnual"]
+            if(tuitiontmp != nil) {
+                food = Int(tuitiontmp as! NSNumber)
+            }
+            
+            // Sum them all up!
+            totExp = food + rent + gas + tuition
+        } catch {
+            //
         }
     }
     
