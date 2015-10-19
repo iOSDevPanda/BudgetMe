@@ -15,12 +15,23 @@ class ExpensesViewController: UIViewController {
     @IBOutlet weak var rent: UITextField!
     @IBOutlet weak var gas: UITextField!
     @IBOutlet weak var tuition: UITextField!
-
+    @IBOutlet var foodExpenseType: UISegmentedControl!
+    @IBOutlet var rentExpenseType: UISegmentedControl!
+    @IBOutlet var gasExpenseType: UISegmentedControl!
+    @IBOutlet var tuitionExpenseType: UISegmentedControl!
+    
+    internal final var MONTHS_IN_YEAR:Int! = 12
     private var user: PFObject!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        // Default to monthly expenses when loaded.
+        foodExpenseType.selectedSegmentIndex = 0;
+        gasExpenseType.selectedSegmentIndex = 0;
+        rentExpenseType.selectedSegmentIndex = 0;
+        tuitionExpenseType.selectedSegmentIndex = 0;
+        
         // Do any additional setup after loading the view.
         let query = PFQuery(className: "Expenses")
         query.whereKey("username", equalTo: (currentUser?.username)!)
@@ -44,16 +55,16 @@ class ExpensesViewController: UIViewController {
     
     @IBAction func updateExpenses(sender: AnyObject) {
         if (food.text! != "") {
-            user["foodAnnual"] = Int(food.text!)
+            user["foodAnnual"] = foodExpenseType.selectedSegmentIndex == 0 ? Int(food.text!)! * MONTHS_IN_YEAR : Int(food.text!)
         }
         if (rent.text! != "") {
-            user["rentAnnual"] = Int(rent.text!)
+            user["rentAnnual"] = rentExpenseType.selectedSegmentIndex == 0 ? Int(rent.text!)! * MONTHS_IN_YEAR : Int(rent.text!)
         }
         if (gas.text! != "") {
-            user["gasAnnual"] = Int(gas.text!)
+            user["gasAnnual"] = gasExpenseType.selectedSegmentIndex == 0 ? Int(gas.text!)! * MONTHS_IN_YEAR : Int(gas.text!)
         }
         if (tuition.text! != "") {
-            user["tuitionAnnual"] = Int(tuition.text!)
+            user["tuitionAnnual"] = tuitionExpenseType.selectedSegmentIndex == 0 ? Int(tuition.text!)! * MONTHS_IN_YEAR : Int(tuition.text!)
         }
         user.saveInBackgroundWithBlock {
             (success: Bool, error:NSError?) -> Void in
