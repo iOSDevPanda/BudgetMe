@@ -23,6 +23,7 @@ class IncomesViewController: UIViewController {
         //query for current values, esle set 0
         let query = PFQuery(className: "Incomes")
         query.whereKey("username", equalTo: (currentUser?.username)!)
+        query.whereKey("subAccount", equalTo: currentAccount)
         do {
             let userArray = try query.findObjects()
             user = userArray[0]

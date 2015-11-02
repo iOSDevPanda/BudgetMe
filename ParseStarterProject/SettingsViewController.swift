@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Parse
 
 class SettingsViewController: UIViewController {
 
@@ -20,6 +21,26 @@ class SettingsViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    @IBAction func settingsUnwind(segue: UIStoryboardSegue) {
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?)
+    {
+        if (segue.identifier == "settingsToSubAccounts") {
+            let uvc = segue.destinationViewController as! SubAccountViewController;
+            let query = PFQuery(className: "SubAccounts")
+            query.whereKey("username", equalTo: (currentUser?.username)!)
+            do {
+                let userArray =  try query.findObjects()
+                uvc.users = userArray
+            }
+            catch {
+                print("Error: Can't load all friends")
+            }
+        }
+    }
+
     
 
     /*

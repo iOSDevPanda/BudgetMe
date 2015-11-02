@@ -35,6 +35,7 @@ class ExpensesViewController: UIViewController {
         // Do any additional setup after loading the view.
         let query = PFQuery(className: "Expenses")
         query.whereKey("username", equalTo: (currentUser?.username)!)
+        query.whereKey("subAccount", equalTo: currentAccount)
         do {
             let userArray = try query.findObjects()
             user = userArray[0]

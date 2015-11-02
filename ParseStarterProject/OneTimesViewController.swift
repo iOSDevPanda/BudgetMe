@@ -39,6 +39,7 @@ class OneTimesViewController: UIViewController {
     func upload(value: Int) {
         let oneTimes = PFObject(className: "OneTimes")
         oneTimes["username"] = currentUser?.username
+        oneTimes["subAccount"] = currentAccount
         oneTimes["oneTime"] = value
         oneTimes.saveInBackgroundWithBlock {
             (success: Bool, error:NSError?) -> Void in

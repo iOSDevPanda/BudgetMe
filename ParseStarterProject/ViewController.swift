@@ -11,6 +11,7 @@ import UIKit
 import Parse
 
 var currentUser = PFUser.currentUser()
+var currentAccount = ""
 
 class ViewController: UIViewController, UITextFieldDelegate {
 
@@ -33,6 +34,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
                 (user: PFUser?, error: NSError?) -> Void in
                 if user != nil {
                     currentUser = PFUser.currentUser()
+                    currentAccount = self.username.text!
                     self.performSegueWithIdentifier("logInToNetIncome", sender: self)
                 } else {
                     //self.errorMessage.text = "Make sure you are using the correct username and password"
@@ -49,6 +51,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
     @IBAction func logOutUnwind(segue: UIStoryboardSegue) {
         PFUser.logOutInBackground()
         currentUser = PFUser.currentUser()
+        currentAccount = ""
         username.text = ""
         password.text = ""
         //errorMessage.text = ""

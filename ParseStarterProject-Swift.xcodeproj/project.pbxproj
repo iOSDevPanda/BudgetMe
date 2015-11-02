@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0F87CF6D1BE28FD200428070 /* SubAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F87CF6C1BE28FD200428070 /* SubAccountViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		0F87CF6F1BE2958900428070 /* CreateSubAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F87CF6E1BE2958900428070 /* CreateSubAccountViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		0FB2BFA01BC460B000A56547 /* CreateAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB2BF9F1BC460B000A56547 /* CreateAccountViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		0FB2BFA21BC460C400A56547 /* NetIncomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB2BFA11BC460C400A56547 /* NetIncomeViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		0FB2BFA41BC460D000A56547 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB2BFA31BC460D000A56547 /* SettingsViewController.swift */; settings = {ASSET_TAGS = (); }; };
@@ -26,6 +28,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0F87CF6C1BE28FD200428070 /* SubAccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubAccountViewController.swift; sourceTree = "<group>"; };
+		0F87CF6E1BE2958900428070 /* CreateSubAccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateSubAccountViewController.swift; sourceTree = "<group>"; };
 		0FB2BF9F1BC460B000A56547 /* CreateAccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateAccountViewController.swift; sourceTree = "<group>"; };
 		0FB2BFA11BC460C400A56547 /* NetIncomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetIncomeViewController.swift; sourceTree = "<group>"; };
 		0FB2BFA31BC460D000A56547 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
@@ -99,6 +103,8 @@
 				81BA814A1A49DA1800E65899 /* AppDelegate.swift */,
 				81BA814C1A49DA1800E65899 /* ViewController.swift */,
 				814C3AC61B69877600E307BB /* Main.storyboard */,
+				0F87CF6E1BE2958900428070 /* CreateSubAccountViewController.swift */,
+				0F87CF6C1BE28FD200428070 /* SubAccountViewController.swift */,
 				0FB2BFA11BC460C400A56547 /* NetIncomeViewController.swift */,
 				0FB2BFA31BC460D000A56547 /* SettingsViewController.swift */,
 				0FB2BFA51BC460E500A56547 /* IncomesViewController.swift */,
@@ -224,7 +230,9 @@
 				0FB2BFA01BC460B000A56547 /* CreateAccountViewController.swift in Sources */,
 				0FB2BFA81BC460F200A56547 /* ExpensesViewController.swift in Sources */,
 				0FB2BFAA1BC460FF00A56547 /* OneTimesViewController.swift in Sources */,
+				0F87CF6D1BE28FD200428070 /* SubAccountViewController.swift in Sources */,
 				0FB2BFA21BC460C400A56547 /* NetIncomeViewController.swift in Sources */,
+				0F87CF6F1BE2958900428070 /* CreateSubAccountViewController.swift in Sources */,
 				81BA814D1A49DA1800E65899 /* ViewController.swift in Sources */,
 				0FB2BFA61BC460E500A56547 /* IncomesViewController.swift in Sources */,
 				0FB2BFA41BC460D000A56547 /* SettingsViewController.swift in Sources */,
