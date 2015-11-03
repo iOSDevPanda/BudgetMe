@@ -12,7 +12,7 @@ import Parse
 class SubAccountViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     var users = [PFObject]()
-    var selectedUser: String!
+    var selectedAccount: String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,7 +39,13 @@ class SubAccountViewController: UIViewController, UITableViewDataSource, UITable
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let cell = tableView.cellForRowAtIndexPath(indexPath)
         let text = cell?.textLabel?.text
-        selectedUser = text!
+        selectedAccount = text!
+        selectSubAccount()
+    }
+    
+    func selectSubAccount() {
+        currentAccount = selectedAccount
+        self.performSegueWithIdentifier("unwindToNetIncome", sender: self)
     }
 
     @IBAction func subAccountUnwind(segue: UIStoryboardSegue) {

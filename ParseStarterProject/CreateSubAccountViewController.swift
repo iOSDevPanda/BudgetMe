@@ -26,7 +26,11 @@ class CreateSubAccountViewController: UIViewController {
 
     @IBAction func createSubAccount(sender: AnyObject) {
         if (username.text != "") {
-            createSubAccount()
+            if (verifyUnqiueSubAccount()) {
+                createSubAccount()
+            } else {
+                print("Sub Account already exists!")
+            }
         } else {
             //errorMessage.text = "Make sure all fields have values!"
             print("Make sure all fields have values!")
@@ -87,7 +91,21 @@ class CreateSubAccountViewController: UIViewController {
             }
         }
     }
-
+    
+    func verifyUnqiueSubAccount() -> Bool {
+        let query = PFQuery(className: "SubAccounts")
+        query.whereKey("username", equalTo: (currentUser?.username)!)
+        query.whereKey("subAccount", equalTo: username.text!)
+        do {
+            let userArray = try query.findObjects()
+            if (userArray.count == 0) {
+                return true
+            }
+        }
+        catch {
+        }
+        return false
+    }
     /*
     // MARK: - Navigation
 

@@ -13,8 +13,11 @@ class IncomesViewController: UIViewController {
 
     @IBOutlet weak var salary: UITextField!
     @IBOutlet weak var scholarships: UITextField!
+    @IBOutlet weak var salaryIncomeType: UISegmentedControl!
+    @IBOutlet weak var scholarshipIncomeType: UISegmentedControl!
 
     private var user: PFObject!
+    internal final var MONTHS_IN_YEAR:Int! = 12
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,6 +35,9 @@ class IncomesViewController: UIViewController {
         }
         catch {
         }
+        
+        salaryIncomeType.selectedSegmentIndex = 0
+        scholarshipIncomeType.selectedSegmentIndex = 0
     }
 
     override func didReceiveMemoryWarning() {
@@ -41,10 +47,10 @@ class IncomesViewController: UIViewController {
     
     @IBAction func updateIncome(sender: AnyObject) {
         if (salary.text! != "") {
-            user["salaryAnnual"] = Int(salary.text!)
+            user["salaryAnnual"] = salaryIncomeType.selectedSegmentIndex == 0 ? Int(salary.text!)! * MONTHS_IN_YEAR : Int(salary.text!)
         }
         if (scholarships.text! != "") {
-            user["scholarshipsAnnual"] = Int(scholarships.text!)
+            user["scholarshipsAnnual"] = scholarshipIncomeType.selectedSegmentIndex == 0 ? Int(scholarships.text!)! * MONTHS_IN_YEAR : Int(scholarships.text!)
         }
         user.saveInBackgroundWithBlock {
             (success: Bool, error:NSError?) -> Void in
