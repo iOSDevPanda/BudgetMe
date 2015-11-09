@@ -26,11 +26,11 @@ class ExpensesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Default to monthly expenses when loaded.
-        foodExpenseType.selectedSegmentIndex = 0;
-        gasExpenseType.selectedSegmentIndex = 0;
-        rentExpenseType.selectedSegmentIndex = 0;
-        tuitionExpenseType.selectedSegmentIndex = 0;
+        // Default to yearly expenses when loaded.
+        foodExpenseType.selectedSegmentIndex = 1;
+        gasExpenseType.selectedSegmentIndex = 1;
+        rentExpenseType.selectedSegmentIndex = 1;
+        tuitionExpenseType.selectedSegmentIndex = 1;
         
         // Do any additional setup after loading the view.
         let query = PFQuery(className: "Expenses")

@@ -39,7 +39,8 @@ class CreateAccountViewController: UIViewController, UITextFieldDelegate {
             user.username = username.text!
             user.password = password.text!
             user.email = email.text!
-            
+            //user.contactNumber = contact.text!
+                
             user.signUpInBackgroundWithBlock {
                 (succeeded: Bool, error: NSError?) -> Void in
                 
@@ -109,6 +110,7 @@ class CreateAccountViewController: UIViewController, UITextFieldDelegate {
         let subAccount = PFObject(className: "SubAccounts")
         subAccount["username"] = username.text!
         subAccount["subAccount"] = username.text!
+        subAccount["contactNumber"] = ""
         subAccount.saveInBackgroundWithBlock {
             (success: Bool, error:NSError?) -> Void in
             if(success) {
