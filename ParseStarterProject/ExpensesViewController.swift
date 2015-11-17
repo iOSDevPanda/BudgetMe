@@ -19,8 +19,12 @@ class ExpensesViewController: UIViewController {
     @IBOutlet var rentExpenseType: UISegmentedControl!
     @IBOutlet var gasExpenseType: UISegmentedControl!
     @IBOutlet var tuitionExpenseType: UISegmentedControl!
+    @IBOutlet weak var foodCurrency: UILabel!
+    @IBOutlet weak var rentCurrency: UILabel!
+    @IBOutlet weak var gasCurrency: UILabel!
+    @IBOutlet weak var tuitionCurrency: UILabel!
     
-    internal final var MONTHS_IN_YEAR:Int! = 12
+    internal final var MONTHS_IN_YEAR = 12.0
     private var user: PFObject!
     
     override func viewDidLoad() {
@@ -40,13 +44,21 @@ class ExpensesViewController: UIViewController {
             let userArray = try query.findObjects()
             user = userArray[0]
             food.text = String(user["foodAnnual"])
+            food.text = String(convertFromUSD((Double(food.text!)!)))
             rent.text = String(user["rentAnnual"])
+            rent.text = String(convertFromUSD((Double(rent.text!)!)))
             gas.text = String(user["gasAnnual"])
+            gas.text = String(convertFromUSD((Double(gas.text!)!)))
             tuition.text = String(user["tuitionAnnual"])
+            tuition.text = String(convertFromUSD((Double(tuition.text!)!)))
         }
         catch {
         }
-
+        
+        foodCurrency.text = selectedCurrency
+        rentCurrency.text = selectedCurrency
+        gasCurrency.text = selectedCurrency
+        tuitionCurrency.text = selectedCurrency
     }
 
     override func didReceiveMemoryWarning() {
@@ -56,16 +68,20 @@ class ExpensesViewController: UIViewController {
     
     @IBAction func updateExpenses(sender: AnyObject) {
         if (food.text! != "") {
-            user["foodAnnual"] = foodExpenseType.selectedSegmentIndex == 0 ? Int(food.text!)! * MONTHS_IN_YEAR : Int(food.text!)
+            let annual = foodExpenseType.selectedSegmentIndex == 0 ? Double(food.text!)! * MONTHS_IN_YEAR : Double(food.text!)
+            user["foodAnnual"] = convertToUSD(Double(annual!))
         }
         if (rent.text! != "") {
-            user["rentAnnual"] = rentExpenseType.selectedSegmentIndex == 0 ? Int(rent.text!)! * MONTHS_IN_YEAR : Int(rent.text!)
+            let annual = rentExpenseType.selectedSegmentIndex == 0 ? Double(rent.text!)! * MONTHS_IN_YEAR : Double(rent.text!)
+            user["rentAnnual"] = convertToUSD(Double(annual!))
         }
         if (gas.text! != "") {
-            user["gasAnnual"] = gasExpenseType.selectedSegmentIndex == 0 ? Int(gas.text!)! * MONTHS_IN_YEAR : Int(gas.text!)
+            let annual = gasExpenseType.selectedSegmentIndex == 0 ? Double(gas.text!)! * MONTHS_IN_YEAR : Double(gas.text!)
+            user["gasAnnual"] = convertToUSD(Double(annual!))
         }
         if (tuition.text! != "") {
-            user["tuitionAnnual"] = tuitionExpenseType.selectedSegmentIndex == 0 ? Int(tuition.text!)! * MONTHS_IN_YEAR : Int(tuition.text!)
+            let annual = tuitionExpenseType.selectedSegmentIndex == 0 ? Double(tuition.text!)! * MONTHS_IN_YEAR : Double(tuition.text!)
+            user["tuitionAnnual"] = convertToUSD(Double(annual!))
         }
         user.saveInBackgroundWithBlock {
             (success: Bool, error:NSError?) -> Void in
@@ -80,6 +96,42 @@ class ExpensesViewController: UIViewController {
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?){
         self.view.endEditing(true)
+    }
+    
+    //Values updated on 11/17/2015
+    
+    func convertToUSD(value: Double) -> Double {
+        switch (selectedCurrency) {
+        case "$":
+            return value
+        case "€":
+            return (value * 1.07)
+        case "£":
+            return (value * 1.52)
+        case "¥":
+            return (value * 0.0081)
+        case "C$":
+            return (value * 0.75)
+        default:
+            return 0
+        }
+    }
+    
+    func convertFromUSD(value: Double) -> Double {
+        switch (selectedCurrency) {
+        case "$":
+            return value
+        case "€":
+            return (value / 1.07)
+        case "£":
+            return (value / 1.52)
+        case "¥":
+            return (value / 0.0081)
+        case "C$":
+            return (value / 0.75)
+        default:
+            return 0
+        }
     }
     
     /*

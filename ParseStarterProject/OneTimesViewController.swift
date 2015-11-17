@@ -11,12 +11,15 @@ import Parse
 
 class OneTimesViewController: UIViewController {
 
+    @IBOutlet weak var currency: UILabel!
     @IBOutlet weak var amount: UITextField!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         amount.text = "0"
+        currency.text = selectedCurrency
     }
 
     override func didReceiveMemoryWarning() {
@@ -26,21 +29,21 @@ class OneTimesViewController: UIViewController {
 
     @IBAction func income(sender: AnyObject) {
         if(amount.text! != "") {
-            upload(Int(amount.text!)!)
+            upload(Double(amount.text!)!)
         }
     }
     
     @IBAction func expense(sender: AnyObject) {
         if(amount.text! != "") {
-            upload(0-Int(amount.text!)!)
+            upload(0-Double(amount.text!)!)
         }
     }
     
-    func upload(value: Int) {
+    func upload(value: Double) {
         let oneTimes = PFObject(className: "OneTimes")
         oneTimes["username"] = currentUser?.username
         oneTimes["subAccount"] = currentAccount
-        oneTimes["oneTime"] = value
+        oneTimes["oneTime"] = convertToUSD(value)
         oneTimes.saveInBackgroundWithBlock {
             (success: Bool, error:NSError?) -> Void in
             if(success) {
@@ -51,6 +54,23 @@ class OneTimesViewController: UIViewController {
             }
         }
 
+    }
+    
+    func convertToUSD(value: Double) -> Double {
+        switch (selectedCurrency) {
+        case "$":
+            return value
+        case "€":
+            return (value * 1.07)
+        case "£":
+            return (value * 1.52)
+        case "¥":
+            return (value * 0.0081)
+        case "C$":
+            return (value * 0.75)
+        default:
+            return 0
+        }
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?){

@@ -15,9 +15,11 @@ class IncomesViewController: UIViewController {
     @IBOutlet weak var scholarships: UITextField!
     @IBOutlet weak var salaryIncomeType: UISegmentedControl!
     @IBOutlet weak var scholarshipIncomeType: UISegmentedControl!
+    @IBOutlet weak var salaryCurrency: UILabel!
+    @IBOutlet weak var scholarshipCurrency: UILabel!
 
     private var user: PFObject!
-    internal final var MONTHS_IN_YEAR:Int! = 12
+    internal final var MONTHS_IN_YEAR = 12.0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,13 +33,18 @@ class IncomesViewController: UIViewController {
             let userArray = try query.findObjects()
             user = userArray[0]
             salary.text = String(user["salaryAnnual"])
+            salary.text = String(convertFromUSD((Double(salary.text!)!)))
             scholarships.text = String(user["scholarshipsAnnual"])
+            scholarships.text = String(convertFromUSD((Double(scholarships.text!)!)))
         }
         catch {
         }
         
-        salaryIncomeType.selectedSegmentIndex = 0
-        scholarshipIncomeType.selectedSegmentIndex = 0
+        salaryIncomeType.selectedSegmentIndex = 1
+        scholarshipIncomeType.selectedSegmentIndex = 1
+        
+        salaryCurrency.text = selectedCurrency
+        scholarshipCurrency.text = selectedCurrency
     }
 
     override func didReceiveMemoryWarning() {
@@ -47,10 +54,12 @@ class IncomesViewController: UIViewController {
     
     @IBAction func updateIncome(sender: AnyObject) {
         if (salary.text! != "") {
-            user["salaryAnnual"] = salaryIncomeType.selectedSegmentIndex == 0 ? Int(salary.text!)! * MONTHS_IN_YEAR : Int(salary.text!)
+            let annual = salaryIncomeType.selectedSegmentIndex == 0 ? Double(salary.text!)! * MONTHS_IN_YEAR : Double(salary.text!)
+            user["salaryAnnual"] = convertToUSD(Double(annual!))
         }
         if (scholarships.text! != "") {
-            user["scholarshipsAnnual"] = scholarshipIncomeType.selectedSegmentIndex == 0 ? Int(scholarships.text!)! * MONTHS_IN_YEAR : Int(scholarships.text!)
+            let annual = scholarshipIncomeType.selectedSegmentIndex == 0 ? Double(scholarships.text!)! * MONTHS_IN_YEAR : Double(scholarships.text!)
+            user["scholarshipsAnnual"] = convertToUSD(Double(annual!))
         }
         user.saveInBackgroundWithBlock {
             (success: Bool, error:NSError?) -> Void in
@@ -65,6 +74,42 @@ class IncomesViewController: UIViewController {
 
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?){
         self.view.endEditing(true)
+    }
+    
+    //Values updated on 11/17/2015
+    
+    func convertToUSD(value: Double) -> Double {
+        switch (selectedCurrency) {
+            case "$":
+                return value
+            case "€":
+                return (value * 1.07)
+            case "£":
+                return (value * 1.52)
+            case "¥":
+                return (value * 0.0081)
+            case "C$":
+                return (value * 0.75)
+            default:
+                return 0
+        }
+    }
+    
+    func convertFromUSD(value: Double) -> Double {
+        switch (selectedCurrency) {
+        case "$":
+            return value
+        case "€":
+            return (value / 1.07)
+        case "£":
+            return (value / 1.52)
+        case "¥":
+            return (value / 0.0081)
+        case "C$":
+            return (value / 0.75)
+        default:
+            return 0
+        }
     }
 
 
