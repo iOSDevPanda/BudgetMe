@@ -26,6 +26,8 @@
 		81BA81791A49E0DB00E65899 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81BA81781A49E0DB00E65899 /* AudioToolbox.framework */; };
 		81BA817B1A49E0E500E65899 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81BA817A1A49E0E500E65899 /* SystemConfiguration.framework */; };
 		81BA817F1A49E0F000E65899 /* libstdc++.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 81BA817E1A49E0F000E65899 /* libstdc++.6.dylib */; };
+		8D68BD541C0B646F0004CEFB /* SavingsItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D68BD521C0B646F0004CEFB /* SavingsItem.swift */; settings = {ASSET_TAGS = (); }; };
+		8D68BD551C0B646F0004CEFB /* SavingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D68BD531C0B646F0004CEFB /* SavingsViewController.swift */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -53,6 +55,8 @@
 		81BA817A1A49E0E500E65899 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		81BA817E1A49E0F000E65899 /* libstdc++.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.dylib"; path = "usr/lib/libstdc++.6.dylib"; sourceTree = SDKROOT; };
 		81BA81801A49E10C00E65899 /* ParseUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseUI.framework; sourceTree = "<group>"; };
+		8D68BD521C0B646F0004CEFB /* SavingsItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SavingsItem.swift; sourceTree = "<group>"; };
+		8D68BD531C0B646F0004CEFB /* SavingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SavingsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +106,8 @@
 		81BA81471A49DA1800E65899 /* ParseStarterProject */ = {
 			isa = PBXGroup;
 			children = (
+				8D68BD521C0B646F0004CEFB /* SavingsItem.swift */,
+				8D68BD531C0B646F0004CEFB /* SavingsViewController.swift */,
 				81BA814A1A49DA1800E65899 /* AppDelegate.swift */,
 				81BA814C1A49DA1800E65899 /* ViewController.swift */,
 				814C3AC61B69877600E307BB /* Main.storyboard */,
@@ -232,6 +238,7 @@
 			files = (
 				0FB2BFA01BC460B000A56547 /* CreateAccountViewController.swift in Sources */,
 				0FB2BFA81BC460F200A56547 /* ExpensesViewController.swift in Sources */,
+				8D68BD541C0B646F0004CEFB /* SavingsItem.swift in Sources */,
 				0FB2BFAA1BC460FF00A56547 /* OneTimesViewController.swift in Sources */,
 				0F87CF6D1BE28FD200428070 /* SubAccountViewController.swift in Sources */,
 				0FB2BFA21BC460C400A56547 /* NetIncomeViewController.swift in Sources */,
@@ -240,6 +247,7 @@
 				0FB2BFA61BC460E500A56547 /* IncomesViewController.swift in Sources */,
 				0FB2BFA41BC460D000A56547 /* SettingsViewController.swift in Sources */,
 				81BA814B1A49DA1800E65899 /* AppDelegate.swift in Sources */,
+				8D68BD551C0B646F0004CEFB /* SavingsViewController.swift in Sources */,
 				0F2FBCEE1BFB9101000CB99F /* ChooseCurrencyViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
