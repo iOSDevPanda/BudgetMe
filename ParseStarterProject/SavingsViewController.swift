@@ -13,7 +13,10 @@ class SavingsViewController: UIViewController, UITableViewDataSource, UITableVie
 
     @IBOutlet weak var tableView: UITableView!
     var savingsItems = [SavingsItem]()
-    var curr = 500 // hardcode test
+    var curr = 100 // hardcode test
+    
+    // Adding the progress view
+    var progressView = UIProgressView(progressViewStyle: .Bar)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,7 +27,16 @@ class SavingsViewController: UIViewController, UITableViewDataSource, UITableVie
         tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
         
         // Styling the table
-        tableView.rowHeight = 100.0
+        tableView.rowHeight = 200.0
+        
+        
+        // Adding the progress view? 
+        progressView.center = tableView.center
+        progressView.trackTintColor = UIColor.lightGrayColor()
+        progressView.tintColor = UIColor.blueColor()
+        
+        // need to figure out how to put the progress bar in each cell
+        self.view.addSubview(progressView)
         
         
         if savingsItems.count > 0 {
@@ -65,7 +77,10 @@ class SavingsViewController: UIViewController, UITableViewDataSource, UITableVie
             // Before loading cell, update progress 
             updateProgress(item)
             
-            cell.textLabel?.text = "\(item.text) \nTotal: \(item.total) \nProgress: \(item.progress)%"
+            cell.textLabel?.text = "\(item.text) \nTotal: \(item.total)"
+            
+            progressView.progress = updateProgress(item)
+            
             return cell
     }
     
@@ -74,9 +89,9 @@ class SavingsViewController: UIViewController, UITableViewDataSource, UITableVie
             return tableView.rowHeight;
     }
     
-    func updateProgress(item:SavingsItem) {
-        item.progress = (Double)((Double)(self.curr) / (Double)(item.total)) * 100.0
-        
+    func updateProgress(item:SavingsItem)->Float {
+        item.progress = (Float)((Float)(self.curr) / (Float)(item.total))
+        return item.progress
     }
 
     /*

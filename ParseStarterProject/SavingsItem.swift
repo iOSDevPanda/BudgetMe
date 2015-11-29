@@ -22,7 +22,7 @@ class SavingsItem: NSObject {
     var total:Int
     
     // progress amount
-    var progress:Double
+    var progress:Float
     
     // initializes item
     init(text:String, total:Int) {
