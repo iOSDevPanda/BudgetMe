@@ -67,7 +67,7 @@ class NetIncomeViewController: UIViewController {
             alert.title = "Sorry!"
             alert.message = "Phone number is not valid."
             alert.addButtonWithTitle("Ok")
-            alert.show()g
+            alert.show()
         }
         
     }
