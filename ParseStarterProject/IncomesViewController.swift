@@ -9,6 +9,8 @@
 import UIKit
 import Parse
 
+var globIn = 0
+
 class IncomesViewController: UIViewController {
 
     @IBOutlet weak var salary: UITextField!
@@ -17,7 +19,10 @@ class IncomesViewController: UIViewController {
     @IBOutlet weak var scholarshipIncomeType: UISegmentedControl!
     @IBOutlet weak var salaryCurrency: UILabel!
     @IBOutlet weak var scholarshipCurrency: UILabel!
-
+    
+    var salaryData = 0
+    var scholarshipData = 0
+    
     private var user: PFObject!
     internal final var MONTHS_IN_YEAR = 12.0
     
@@ -36,6 +41,12 @@ class IncomesViewController: UIViewController {
             salary.text = String(convertFromUSD((Double(salary.text!)!)))
             scholarships.text = String(user["scholarshipsAnnual"])
             scholarships.text = String(convertFromUSD((Double(scholarships.text!)!)))
+            
+            // Calculating Total Income
+            salaryData = Int(user["salaryAnnual"] as! NSNumber)
+            scholarshipData = Int(user["scholarshipAnnual"] as! NSNumber)
+            
+            globIn = salaryData + scholarshipData
         }
         catch {
         }

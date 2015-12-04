@@ -29,7 +29,7 @@ class ExpensesViewController: UIViewController {
     internal final var MONTHS_IN_YEAR = 12.0
     private var user: PFObject!
     
-    // Trying something 
+    // Calculating Total Expenses in this class
     var foodData = 0
     var rentData = 0
     var gasData = 0
@@ -62,6 +62,7 @@ class ExpensesViewController: UIViewController {
             tuition.text = String(user["tuitionAnnual"])
             tuition.text = String(convertFromUSD((Double(tuition.text!)!)))
             
+            // Calculating Total Expenses
             foodData = Int(user["foodAnnual"] as! NSNumber)
             rentData = Int(user["rentAnnual"] as! NSNumber)
             gasData = Int(user["gasAnnual"] as! NSNumber)

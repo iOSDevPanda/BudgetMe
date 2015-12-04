@@ -33,6 +33,7 @@ class NetIncomeViewController: UIViewController {
         super.viewDidLoad()
         
         setViewExp(globExp)
+        setViewIn(globIn)
         
         let query = PFQuery(className: "SubAccounts")
         query.whereKey("username", equalTo: (currentUser?.username)!)
@@ -79,7 +80,7 @@ class NetIncomeViewController: UIViewController {
     }
     
     @IBAction func calculateNet(sender: AnyObject) {
-        queryIncomes()
+        // queryIncomes()
         // queryExpenses()
         
         // Display the incomes and the expenses
@@ -99,7 +100,7 @@ class NetIncomeViewController: UIViewController {
     }
     
     // general function to query incomes
-    func queryIncomes() {
+    /*func queryIncomes() {
         let in_query = PFQuery(className: "Incomes")
         in_query.whereKey("username", equalTo:(currentUser?.username)!)
         do {
@@ -117,7 +118,7 @@ class NetIncomeViewController: UIViewController {
         } catch {
             //
         }
-    }
+    }*/
     
     // general function query expenses
     /*func queryExpenses() {
@@ -155,6 +156,10 @@ class NetIncomeViewController: UIViewController {
     
     func setViewExp(totExp: Int) {
         self.totExp = totExp
+    }
+    
+    func setViewIn(totIn: Int) {
+        self.totIn = totIn
     }
     
     // Should probably figure this out
