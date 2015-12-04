@@ -9,6 +9,8 @@
 import UIKit
 import Parse
 
+var globExp = 0
+
 class ExpensesViewController: UIViewController {
 
     @IBOutlet weak var food: UITextField!
@@ -27,8 +29,16 @@ class ExpensesViewController: UIViewController {
     internal final var MONTHS_IN_YEAR = 12.0
     private var user: PFObject!
     
+    // Trying something 
+    var foodData = 0
+    var rentData = 0
+    var gasData = 0
+    var tuitionData = 0
+    var totExp = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         
         // Default to yearly expenses when loaded.
         foodExpenseType.selectedSegmentIndex = 1;
@@ -51,6 +61,13 @@ class ExpensesViewController: UIViewController {
             gas.text = String(convertFromUSD((Double(gas.text!)!)))
             tuition.text = String(user["tuitionAnnual"])
             tuition.text = String(convertFromUSD((Double(tuition.text!)!)))
+            
+            foodData = Int(user["foodAnnual"] as! NSNumber)
+            rentData = Int(user["rentAnnual"] as! NSNumber)
+            gasData = Int(user["gasAnnual"] as! NSNumber)
+            tuitionData = Int(user["tuitionAnnual"] as! NSNumber)
+            
+            globExp = foodData + rentData + gasData + tuitionData
         }
         catch {
         }
@@ -133,6 +150,13 @@ class ExpensesViewController: UIViewController {
             return 0
         }
     }
+    
+    
+    /*
+    func setGlobExp(totExp: Int) {
+        globExp = totExp
+    }
+    */
     
     /*
     // MARK: - Navigation

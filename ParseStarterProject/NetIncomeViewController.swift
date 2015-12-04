@@ -32,6 +32,8 @@ class NetIncomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setViewExp(globExp)
+        
         let query = PFQuery(className: "SubAccounts")
         query.whereKey("username", equalTo: (currentUser?.username)!)
         do {
@@ -78,14 +80,14 @@ class NetIncomeViewController: UIViewController {
     
     @IBAction func calculateNet(sender: AnyObject) {
         queryIncomes()
-        queryExpenses()
+        // queryExpenses()
         
         // Display the incomes and the expenses
         moneyIn.text = "$\(totIn)"
-        moneyOut.text = "$\(totExp)"
+        moneyOut.text = "$\(globExp)"
         
         // subtract outflows from inflows
-        net = totIn - totExp + onetime
+        net = totIn - globExp + onetime
         
         moneyNet.text = "$\(net)"
         
@@ -118,7 +120,7 @@ class NetIncomeViewController: UIViewController {
     }
     
     // general function query expenses
-    func queryExpenses() {
+    /*func queryExpenses() {
         
         let exp_query = PFQuery(className: "Expenses")
         exp_query.whereKey("username", equalTo:(currentUser?.username)!)
@@ -149,6 +151,10 @@ class NetIncomeViewController: UIViewController {
         }
         
         
+    }*/
+    
+    func setViewExp(totExp: Int) {
+        self.totExp = totExp
     }
     
     // Should probably figure this out
