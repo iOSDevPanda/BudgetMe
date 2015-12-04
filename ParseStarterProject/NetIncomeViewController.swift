@@ -9,6 +9,8 @@
 import UIKit
 import Parse
 
+var globNet = 0
+
 class NetIncomeViewController: UIViewController {
     
     @IBOutlet weak var moneyIn: UILabel!
@@ -82,13 +84,15 @@ class NetIncomeViewController: UIViewController {
     @IBAction func calculateNet(sender: AnyObject) {
         // queryIncomes()
         // queryExpenses()
+        queryOneTimes()
         
         // Display the incomes and the expenses
-        moneyIn.text = "$\(totIn)"
+        moneyIn.text = "$\(globIn)"
         moneyOut.text = "$\(globExp)"
         
         // subtract outflows from inflows
         net = globIn - globExp + onetime
+        globNet = net
         
         moneyNet.text = "$\(net)"
         
