@@ -9,8 +9,6 @@
 import UIKit
 import Parse
 
-var globNet = 0
-
 class NetIncomeViewController: UIViewController {
     
     @IBOutlet weak var moneyIn: UILabel!
@@ -19,33 +17,30 @@ class NetIncomeViewController: UIViewController {
 
     private var user: PFObject!
     
-    var totIn:Int = 0
-    var totExp:Int = 0
-    var net:Int = 0
+    private var query: PFQuery!
+    private var userArray: [PFObject] = []
     
-    var sal:Int = 0
-    var schol:Int = 0
-    var food:Int = 0
-    var rent:Int = 0
-    var gas:Int = 0
-    var tuition:Int = 0
-    var onetime:Int = 0
+    private var latestIncome:Int! = 0
+    private var latestExpense:Int! = 0
+    private var latestOneTime:Int! = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setViewExp(globExp)
-        setViewIn(globIn)
-        setViewOne(globOneTime)
+        updateIncomes()
+        updateExpenses()
         
-        let query = PFQuery(className: "SubAccounts")
+        
+        query = PFQuery(className: "SubAccounts")
         query.whereKey("username", equalTo: (currentUser?.username)!)
         do {
-            let userArray = try query.findObjects()
+            userArray = try query.findObjects()
             user = userArray[0]
         }
         catch {
         }
+        
+        
         // Do any additional setup after loading the view.
     }
 
@@ -83,20 +78,16 @@ class NetIncomeViewController: UIViewController {
     }
     
     @IBAction func calculateNet(sender: AnyObject) {
-        // queryIncomes()
-        // queryExpenses()
-        // queryOneTimes()
-        
-        // Display the incomes and the expenses
-        moneyIn.text = "$\(globIn)"
-        moneyOut.text = "$\(globExp)"
+         updateIncomes()
+         updateExpenses()
+         //updateOneTimes()
         
         // subtract outflows from inflows
-        net = globIn - globExp + onetime
-        globNet = net
+        let net:Int! = latestIncome - latestExpense + latestOneTime
         
-        moneyNet.text = "$\(net)"
+        moneyNet.text = selectedCurrency + " \(net)"
         
+        // SO COOL WOW COLOR
         if(net >= 0) {
             moneyNet.textColor = UIColor.greenColor()
         } else if(net < 0) {
@@ -104,89 +95,85 @@ class NetIncomeViewController: UIViewController {
         }
     }
     
-    // general function to query incomes
-    /*func queryIncomes() {
-        let in_query = PFQuery(className: "Incomes")
-        in_query.whereKey("username", equalTo:(currentUser?.username)!)
+    // general function to query and update incomes
+    func updateIncomes() {
+        query = PFQuery(className: "Incomes")
+        query.whereKey("username", equalTo:(currentUser?.username)!)
         do {
-            let userArray = try in_query.findObjects()
+            userArray = try query.findObjects()
             user = userArray[0]
-            let saltmp = user["salaryAnnual"]
-            if(saltmp != nil) {
-                sal = Int(saltmp as! NSNumber)
-            }
-            let scholtmp = user["scholarshipsAnnual"]
-            if(scholtmp != nil) {
-                schol = Int(scholtmp as! NSNumber)
-            }
-            totIn = sal + schol
+            latestIncome = NetIncomeViewController.convertFromUSD(Double(String(user["incomeTotal"]))!)
+            let output:String! = String(latestIncome)
+            moneyIn.text = selectedCurrency + " \(output)"
         } catch {
             //
         }
-    }*/
+    }
     
     // general function query expenses
-    /*func queryExpenses() {
-        
-        let exp_query = PFQuery(className: "Expenses")
-        exp_query.whereKey("username", equalTo:(currentUser?.username)!)
+    func updateExpenses() {
+        query = PFQuery(className: "Expenses")
+        query.whereKey("username", equalTo:(currentUser?.username)!)
         do {
-            let userArray = try exp_query.findObjects()
+            userArray = try query.findObjects()
             user = userArray[0]
-            let foodtmp = user["foodAnnual"]
-            if(foodtmp != nil) {
-                food = Int(foodtmp as! NSNumber)
-            }
-            let renttmp = user["rentAnnual"]
-            if(renttmp != nil) {
-                food = Int(renttmp as! NSNumber)
-            }
-            let gastmp = user["gasAnnual"]
-            if(gastmp != nil) {
-                food = Int(gastmp as! NSNumber)
-            }
-            let tuitiontmp = user["tuitionAnnual"]
-            if(tuitiontmp != nil) {
-                food = Int(tuitiontmp as! NSNumber)
-            }
-            
-            // Sum them all up!
-            totExp = food + rent + gas + tuition
+            latestExpense = NetIncomeViewController.convertFromUSD(Double(String(user["expenseTotal"]))!)
+            let output:String! = String(latestExpense)
+            moneyOut.text = selectedCurrency + " \(output)"
         } catch {
             //
         }
         
-        
-    }*/
-    
-    func setViewExp(totExp: Int) {
-        self.totExp = totExp
     }
     
-    func setViewIn(totIn: Int) {
-        self.totIn = totIn
+    func updateOneTimes() {
+        query = PFQuery(className: "OneTimes")
+        query.whereKey("username", equalTo:(currentUser?.username)!)
+        do {
+            userArray = try query.findObjects()
+            user = userArray[0]
+            latestOneTime = NetIncomeViewController.convertFromUSD(Double(String(user["onetimeTotal"]))!)
+        } catch {
+            //
+        }
     }
     
-    func setViewOne(onetime: Int) {
-        self.onetime = onetime
+    //Values updated on 11/17/2015
+    
+    static func convertToUSD(value: Double) -> Int {
+        switch (selectedCurrency) {
+        case "$":
+            return Int(value)
+        case "€":
+            return Int(value * 1.07)
+        case "£":
+            return Int(value * 1.52)
+        case "¥":
+            return Int(value * 0.0081)
+        case "C$":
+            return Int(value * 0.75)
+        default:
+            return 0
+        }
     }
     
-    // Should probably figure this out
+    static func convertFromUSD(value: Double) -> Int {
+        switch (selectedCurrency) {
+        case "$":
+            return Int(value)
+        case "€":
+            return Int(value / 1.07)
+        case "£":
+            return Int(value / 1.52)
+        case "¥":
+            return Int(value / 0.0081)
+        case "C$":
+            return Int(value / 0.75)
+        default:
+            return 0
+        }
+    }
     
-//    func queryOneTimes() {
-//        let onetime_query = PFQuery(className: "OneTimes")
-//        onetime_query.whereKey("username", equalTo:(currentUser?.username)!)
-//        do {
-//            let userArray = try onetime_query.findObjects()
-//            user = userArray[0]
-//            let onetmp = user["oneTime"]
-//            if(onetmp != nil) {
-//                onetime = Int(onetmp as! NSNumber)
-//            }
-//        } catch {
-//            //
-//        }
-//    }
     
     /*
     // MARK: - Navigation

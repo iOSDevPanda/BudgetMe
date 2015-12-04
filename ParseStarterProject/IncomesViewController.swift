@@ -9,8 +9,6 @@
 import UIKit
 import Parse
 
-var globIn = 0
-
 class IncomesViewController: UIViewController {
 
     @IBOutlet weak var salary: UITextField!
@@ -19,9 +17,6 @@ class IncomesViewController: UIViewController {
     @IBOutlet weak var scholarshipIncomeType: UISegmentedControl!
     @IBOutlet weak var salaryCurrency: UILabel!
     @IBOutlet weak var scholarshipCurrency: UILabel!
-    
-    var salaryData = 0
-    var scholarshipData = 0
     
     private var user: PFObject!
     internal final var MONTHS_IN_YEAR = 12.0
@@ -38,9 +33,9 @@ class IncomesViewController: UIViewController {
             let userArray = try query.findObjects()
             user = userArray[0]
             salary.text = String(user["salaryAnnual"])
-            salary.text = String(convertFromUSD((Double(salary.text!)!)))
+            salary.text = String(NetIncomeViewController.convertFromUSD((Double(salary.text!)!)))
             scholarships.text = String(user["scholarshipsAnnual"])
-            scholarships.text = String(convertFromUSD((Double(scholarships.text!)!)))
+            scholarships.text = String(NetIncomeViewController.convertFromUSD((Double(scholarships.text!)!)))
             
         }
         catch {
@@ -61,18 +56,14 @@ class IncomesViewController: UIViewController {
     @IBAction func updateIncome(sender: AnyObject) {
         if (salary.text! != "") {
             let annual = salaryIncomeType.selectedSegmentIndex == 0 ? Double(salary.text!)! * MONTHS_IN_YEAR : Double(salary.text!)
-            user["salaryAnnual"] = convertToUSD(Double(annual!))
+            user["salaryAnnual"] = NetIncomeViewController.convertToUSD(Double(annual!))
         }
         if (scholarships.text! != "") {
             let annual = scholarshipIncomeType.selectedSegmentIndex == 0 ? Double(scholarships.text!)! * MONTHS_IN_YEAR : Double(scholarships.text!)
-            user["scholarshipsAnnual"] = convertToUSD(Double(annual!))
+            user["scholarshipsAnnual"] = NetIncomeViewController.convertToUSD(Double(annual!))
         }
         
-        // Calculating Total Income
-        salaryData = Int(user["salaryAnnual"] as! NSNumber)
-        scholarshipData = Int(user["scholarshipsAnnual"] as! NSNumber)
-        
-        globIn = salaryData + scholarshipData
+        user["incomeTotal"] = Int(user["salaryAnnual"] as! NSNumber) + Int(user["scholarshipsAnnual"] as! NSNumber)
         
         user.saveInBackgroundWithBlock {
             (success: Bool, error:NSError?) -> Void in
@@ -89,41 +80,7 @@ class IncomesViewController: UIViewController {
         self.view.endEditing(true)
     }
     
-    //Values updated on 11/17/2015
-    
-    func convertToUSD(value: Double) -> Double {
-        switch (selectedCurrency) {
-            case "$":
-                return value
-            case "€":
-                return (value * 1.07)
-            case "£":
-                return (value * 1.52)
-            case "¥":
-                return (value * 0.0081)
-            case "C$":
-                return (value * 0.75)
-            default:
-                return 0
-        }
-    }
-    
-    func convertFromUSD(value: Double) -> Double {
-        switch (selectedCurrency) {
-        case "$":
-            return value
-        case "€":
-            return (value / 1.07)
-        case "£":
-            return (value / 1.52)
-        case "¥":
-            return (value / 0.0081)
-        case "C$":
-            return (value / 0.75)
-        default:
-            return 0
-        }
-    }
+
 
 
     /*

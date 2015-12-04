@@ -19,16 +19,6 @@ class SavingsViewController: UIViewController, UITableViewDataSource, UITableVie
     // Stuff needed for the Parse Query
     var net:Int = 0
     
-//    var totIn:Int = 0
-//    var totExp:Int = 0
-//    var sal:Int = 0
-//    var schol:Int = 0
-//    var food:Int = 0
-//    var rent:Int = 0
-//    var gas:Int = 0
-//    var tuition:Int = 0
-//    var onetime:Int = 0
-    
     var savingsItems = [SavingsItem]()
     // var curr = 100 // hard code test
 
@@ -96,7 +86,7 @@ class SavingsViewController: UIViewController, UITableViewDataSource, UITableVie
     func tableView(tableView: UITableView,
         cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
             let cell = tableView.dequeueReusableCellWithIdentifier("cell",
-                forIndexPath: indexPath) as! UITableViewCell
+                forIndexPath: indexPath) 
             
             cell.textLabel!.numberOfLines = 0
             cell.textLabel!.lineBreakMode = NSLineBreakMode.ByWordWrapping
@@ -106,7 +96,7 @@ class SavingsViewController: UIViewController, UITableViewDataSource, UITableVie
             // Before loading cell, update progress 
             updateProgress(item)
             
-            var cellData = "\(item.text) \nTotal: \(item.total) \nProgress: \((item.progress)*100)%"
+            let cellData = "\(item.text) \nTotal: \(item.total) \nProgress: \((item.progress)*100)%"
             
             
             cell.textLabel?.text = cellData
@@ -136,9 +126,6 @@ class SavingsViewController: UIViewController, UITableViewDataSource, UITableVie
         // Calculate net first
 //        queryIncomes()
 //        queryExpenses()
-        
-        // get net 
-        setViewNet(globNet)
         
         item.progress = (Float)((Float)(self.net) / (Float)(item.total))
         
