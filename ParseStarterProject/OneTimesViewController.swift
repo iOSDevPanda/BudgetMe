@@ -9,19 +9,28 @@
 import UIKit
 import Parse
 
-var globOneTime = 0
-
 class OneTimesViewController: UIViewController {
 
     @IBOutlet weak var currency: UILabel!
     @IBOutlet weak var amount: UITextField!
     
     var oneTimeData = 0
+    var user : PFObject!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
+        let query = PFQuery(className: "OneTimes")
+        query.whereKey("username", equalTo: (currentUser?.username)!)
+        query.whereKey("subAccount", equalTo: currentAccount)
+        do {
+            let userArray = try query.findObjects()
+            user = userArray[0]
+        } catch {
+            //
+        }
+        
         amount.text = "0"
         currency.text = selectedCurrency
     }
@@ -44,41 +53,10 @@ class OneTimesViewController: UIViewController {
     }
     
     func upload(value: Double) {
-        let oneTimes = PFObject(className: "OneTimes")
-        oneTimes["username"] = currentUser?.username
-        oneTimes["subAccount"] = currentAccount
-        oneTimes["oneTime"] = convertToUSD(value)
+        user["onetimeTotal"] = NetIncomeViewController.convertToUSD(Double(user["onetimeTotal"] as! NSNumber)) + NetIncomeViewController.convertToUSD(value)
         
-        globOneTime = Int(value)
-        
-        oneTimes.saveInBackgroundWithBlock {
-            (success: Bool, error:NSError?) -> Void in
-            if(success) {
-                print("Saved")
-            }
-            else {
-                print("Error")
-            }
-        }
-
     }
     
-    func convertToUSD(value: Double) -> Double {
-        switch (selectedCurrency) {
-        case "$":
-            return value
-        case "€":
-            return (value * 1.07)
-        case "£":
-            return (value * 1.52)
-        case "¥":
-            return (value * 0.0081)
-        case "C$":
-            return (value * 0.75)
-        default:
-            return 0
-        }
-    }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?){
         self.view.endEditing(true)

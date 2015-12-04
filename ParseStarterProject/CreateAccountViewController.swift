@@ -48,6 +48,7 @@ class CreateAccountViewController: UIViewController, UITextFieldDelegate {
                     self.validSignUp = true
                     self.createIncomesRow()
                     self.createExpensesRow()
+                    self.createOneTimeRow()
                     self.createInitialSubAccount()
                     PFUser.logInWithUsernameInBackground(self.username.text!, password: self.password.text!) {
                         (user: PFUser?, error: NSError?) -> Void in
@@ -77,6 +78,7 @@ class CreateAccountViewController: UIViewController, UITextFieldDelegate {
         incomes["subAccount"] = username.text!
         incomes["salaryAnnual"] = 0
         incomes["scholarshipsAnnual"] = 0
+        incomes["incomeTotal"] = 0
         incomes.saveInBackgroundWithBlock {
             (success: Bool, error:NSError?) -> Void in
             if(success) {
@@ -95,7 +97,24 @@ class CreateAccountViewController: UIViewController, UITextFieldDelegate {
         expenses["foodAnnual"] = 0
         expenses["tuitionAnnual"] = 0
         expenses["rentAnnual"] = 0
+        expenses["expenseTotal"] = 0
         expenses.saveInBackgroundWithBlock {
+            (success: Bool, error:NSError?) -> Void in
+            if(success) {
+                print("Saved")
+            }
+            else {
+                print("Error")
+            }
+        }
+    }
+    
+    func createOneTimeRow() {
+        let oneTime = PFObject(className: "OneTimes")
+        oneTime["username"] = username.text!
+        oneTime["subAccount"] = username.text!
+        oneTime["onetimeTotal"] = 0
+        oneTime.saveInBackgroundWithBlock {
             (success: Bool, error:NSError?) -> Void in
             if(success) {
                 print("Saved")

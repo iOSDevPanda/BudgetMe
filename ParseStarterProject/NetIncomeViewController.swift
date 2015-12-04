@@ -29,7 +29,7 @@ class NetIncomeViewController: UIViewController {
         
         updateIncomes()
         updateExpenses()
-        
+        updateOneTimes()
         
         query = PFQuery(className: "SubAccounts")
         query.whereKey("username", equalTo: (currentUser?.username)!)
@@ -75,12 +75,13 @@ class NetIncomeViewController: UIViewController {
     
     
     @IBAction func netIncomeUnwind(segue: UIStoryboardSegue) {
+        calculateNet(segue.description)
     }
     
     @IBAction func calculateNet(sender: AnyObject) {
          updateIncomes()
          updateExpenses()
-         //updateOneTimes()
+         updateOneTimes()
         
         // subtract outflows from inflows
         let net:Int! = latestIncome - latestExpense + latestOneTime
@@ -102,7 +103,7 @@ class NetIncomeViewController: UIViewController {
         do {
             userArray = try query.findObjects()
             user = userArray[0]
-            latestIncome = NetIncomeViewController.convertFromUSD(Double(String(user["incomeTotal"]))!)
+            latestIncome = NetIncomeViewController.convertFromUSD(Double(user["incomeTotal"] as! NSNumber))
             let output:String! = String(latestIncome)
             moneyIn.text = selectedCurrency + " \(output)"
         } catch {
@@ -117,7 +118,7 @@ class NetIncomeViewController: UIViewController {
         do {
             userArray = try query.findObjects()
             user = userArray[0]
-            latestExpense = NetIncomeViewController.convertFromUSD(Double(String(user["expenseTotal"]))!)
+            latestExpense = NetIncomeViewController.convertFromUSD(Double(user["expenseTotal"] as! NSNumber))
             let output:String! = String(latestExpense)
             moneyOut.text = selectedCurrency + " \(output)"
         } catch {
@@ -132,7 +133,7 @@ class NetIncomeViewController: UIViewController {
         do {
             userArray = try query.findObjects()
             user = userArray[0]
-            latestOneTime = NetIncomeViewController.convertFromUSD(Double(String(user["onetimeTotal"]))!)
+            latestOneTime = NetIncomeViewController.convertFromUSD(Double(user["onetimeTotal"] as! NSNumber))
         } catch {
             //
         }
