@@ -509,7 +509,7 @@
                                     <navigationItem title="Recurring Income" id="k5x-Dw-rhV">
                                         <barButtonItem key="leftBarButtonItem" title="Back" id="aZ9-oK-cmX">
                                             <connections>
-                                                <segue destination="TPc-0c-8NF" kind="unwind" unwindAction="netIncomeUnwind:" id="Xqo-Me-odY"/>
+                                                <segue destination="TPc-0c-8NF" kind="unwind" unwindAction="netIncomeUnwind:" id="qdd-cr-F33"/>
                                             </connections>
                                         </barButtonItem>
                                     </navigationItem>
@@ -555,8 +555,7 @@
                                 <rect key="frame" x="152" y="217" width="297" height="30"/>
                                 <state key="normal" title="Update Income"/>
                                 <connections>
-                                    <action selector="updateIncome:" destination="Mhu-0z-1xg" eventType="touchUpInside" id="Ejn-YV-jEP"/>
-                                    <segue destination="TPc-0c-8NF" kind="unwind" unwindAction="netIncomeUnwind:" id="I2q-SH-k4a"/>
+                                    <segue destination="TPc-0c-8NF" kind="unwind" unwindAction="netIncomeUnwind:" id="r11-fg-rKc"/>
                                 </connections>
                             </button>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="uvc-Hu-4C2">
@@ -643,7 +642,7 @@
                                     <navigationItem title="Recurring Expenses" id="Hje-ai-row">
                                         <barButtonItem key="leftBarButtonItem" title="Back" id="W6G-qp-OqD">
                                             <connections>
-                                                <segue destination="lif-Gj-sZ9" kind="unwind" unwindAction="netIncomeUnwind:" id="tAe-pq-Obc"/>
+                                                <segue destination="lif-Gj-sZ9" kind="unwind" unwindAction="netIncomeUnwind:" id="37J-3s-Zxu"/>
                                             </connections>
                                         </barButtonItem>
                                     </navigationItem>
@@ -737,8 +736,7 @@
                                 <rect key="frame" x="241" y="288" width="120" height="30"/>
                                 <state key="normal" title="Update Expenses"/>
                                 <connections>
-                                    <action selector="updateExpenses:" destination="GYr-6H-59I" eventType="touchUpInside" id="zRU-Ko-vWd"/>
-                                    <segue destination="lif-Gj-sZ9" kind="unwind" unwindAction="netIncomeUnwind:" id="R5u-qZ-8zL"/>
+                                    <segue destination="lif-Gj-sZ9" kind="unwind" unwindAction="netIncomeUnwind:" id="DWp-29-bdP"/>
                                 </connections>
                             </button>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="lqI-R1-4S4">
@@ -849,7 +847,7 @@
                                     <navigationItem title="One Time Incomes/Expenses" id="8nU-Ld-9gJ">
                                         <barButtonItem key="leftBarButtonItem" title="Back" id="5aW-t1-BDN">
                                             <connections>
-                                                <segue destination="FdD-tZ-qGH" kind="unwind" unwindAction="netIncomeUnwind:" id="hU4-85-mvv"/>
+                                                <segue destination="FdD-tZ-qGH" kind="unwind" unwindAction="netIncomeUnwind:" id="74c-0v-gfg"/>
                                             </connections>
                                         </barButtonItem>
                                     </navigationItem>
@@ -882,8 +880,8 @@
                                 <rect key="frame" x="222" y="148" width="51" height="30"/>
                                 <state key="normal" title="Income"/>
                                 <connections>
-                                    <action selector="income:" destination="7XP-H6-WMQ" eventType="touchUpInside" id="XGe-Gz-6Nd"/>
-                                    <segue destination="FdD-tZ-qGH" kind="unwind" unwindAction="netIncomeUnwind:" id="h1K-sb-Sgj"/>
+                                    <action selector="income:" destination="7XP-H6-WMQ" eventType="touchUpInside" id="8SL-s6-utK"/>
+                                    <segue destination="FdD-tZ-qGH" kind="unwind" unwindAction="netIncomeUnwind:" id="AFq-q9-Pa4"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text=" " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i2n-Ej-rzG">
@@ -896,8 +894,8 @@
                                 <rect key="frame" x="327" y="148" width="59" height="30"/>
                                 <state key="normal" title="Expense"/>
                                 <connections>
-                                    <action selector="expense:" destination="7XP-H6-WMQ" eventType="touchUpInside" id="erp-j7-ibp"/>
-                                    <segue destination="FdD-tZ-qGH" kind="unwind" unwindAction="netIncomeUnwind:" id="1WV-dL-YeP"/>
+                                    <action selector="expense:" destination="7XP-H6-WMQ" eventType="touchUpInside" id="kCH-LN-txl"/>
+                                    <segue destination="FdD-tZ-qGH" kind="unwind" unwindAction="netIncomeUnwind:" id="aNu-xH-BSg"/>
                                 </connections>
                             </button>
                         </subviews>

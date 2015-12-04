@@ -53,7 +53,11 @@ class IncomesViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func updateIncome(sender: AnyObject) {
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        updateIncome(sender!)
+    }
+    
+    func updateIncome(sender: AnyObject) {
         if (salary.text! != "") {
             let annual = salaryIncomeType.selectedSegmentIndex == 0 ? Double(salary.text!)! * MONTHS_IN_YEAR : Double(salary.text!)
             user["salaryAnnual"] = NetIncomeViewController.convertToUSD(Double(annual!))

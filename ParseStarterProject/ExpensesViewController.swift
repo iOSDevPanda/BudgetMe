@@ -68,7 +68,11 @@ class ExpensesViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func updateExpenses(sender: AnyObject) {
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        updateExpenses(sender!)
+    }
+    
+    func updateExpenses(sender: AnyObject) {
         if (food.text! != "") {
             let annual = foodExpenseType.selectedSegmentIndex == 0 ? Double(food.text!)! * MONTHS_IN_YEAR : Double(food.text!)
             user["foodAnnual"] = NetIncomeViewController.convertToUSD(Double(annual!))

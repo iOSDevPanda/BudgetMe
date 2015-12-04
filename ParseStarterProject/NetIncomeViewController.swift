@@ -75,7 +75,21 @@ class NetIncomeViewController: UIViewController {
     
     
     @IBAction func netIncomeUnwind(segue: UIStoryboardSegue) {
-        calculateNet(segue.description)
+        updateIncomes()
+        updateExpenses()
+        updateOneTimes()
+        
+        // subtract outflows from inflows
+        let net:Int! = latestIncome - latestExpense + latestOneTime
+        
+        moneyNet.text = selectedCurrency + " \(net)"
+        
+        // SO COOL WOW COLOR
+        if(net >= 0) {
+            moneyNet.textColor = UIColor.greenColor()
+        } else if(net < 0) {
+            moneyNet.textColor = UIColor.redColor()
+        }
     }
     
     @IBAction func calculateNet(sender: AnyObject) {
