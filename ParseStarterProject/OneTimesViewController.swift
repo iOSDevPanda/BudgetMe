@@ -49,6 +49,8 @@ class OneTimesViewController: UIViewController {
         oneTimes["subAccount"] = currentAccount
         oneTimes["oneTime"] = convertToUSD(value)
         
+        globOneTime = Int(value)
+        
         oneTimes.saveInBackgroundWithBlock {
             (success: Bool, error:NSError?) -> Void in
             if(success) {

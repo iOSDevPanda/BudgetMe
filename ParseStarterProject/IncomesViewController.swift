@@ -42,11 +42,6 @@ class IncomesViewController: UIViewController {
             scholarships.text = String(user["scholarshipsAnnual"])
             scholarships.text = String(convertFromUSD((Double(scholarships.text!)!)))
             
-            // Calculating Total Income
-            salaryData = Int(user["salaryAnnual"] as! NSNumber)
-            scholarshipData = Int(user["scholarshipsAnnual"] as! NSNumber)
-            
-            globIn = salaryData + scholarshipData
         }
         catch {
         }
@@ -72,6 +67,13 @@ class IncomesViewController: UIViewController {
             let annual = scholarshipIncomeType.selectedSegmentIndex == 0 ? Double(scholarships.text!)! * MONTHS_IN_YEAR : Double(scholarships.text!)
             user["scholarshipsAnnual"] = convertToUSD(Double(annual!))
         }
+        
+        // Calculating Total Income
+        salaryData = Int(user["salaryAnnual"] as! NSNumber)
+        scholarshipData = Int(user["scholarshipsAnnual"] as! NSNumber)
+        
+        globIn = salaryData + scholarshipData
+        
         user.saveInBackgroundWithBlock {
             (success: Bool, error:NSError?) -> Void in
             if(success) {

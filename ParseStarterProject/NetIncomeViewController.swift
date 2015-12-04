@@ -36,6 +36,7 @@ class NetIncomeViewController: UIViewController {
         
         setViewExp(globExp)
         setViewIn(globIn)
+        setViewOne(globOneTime)
         
         let query = PFQuery(className: "SubAccounts")
         query.whereKey("username", equalTo: (currentUser?.username)!)
@@ -84,7 +85,7 @@ class NetIncomeViewController: UIViewController {
     @IBAction func calculateNet(sender: AnyObject) {
         // queryIncomes()
         // queryExpenses()
-        queryOneTimes()
+        // queryOneTimes()
         
         // Display the incomes and the expenses
         moneyIn.text = "$\(globIn)"
@@ -166,22 +167,26 @@ class NetIncomeViewController: UIViewController {
         self.totIn = totIn
     }
     
+    func setViewOne(onetime: Int) {
+        self.onetime = onetime
+    }
+    
     // Should probably figure this out
     
-    func queryOneTimes() {
-        let onetime_query = PFQuery(className: "OneTimes")
-        onetime_query.whereKey("username", equalTo:(currentUser?.username)!)
-        do {
-            let userArray = try onetime_query.findObjects()
-            user = userArray[0]
-            let onetmp = user["oneTime"]
-            if(onetmp != nil) {
-                onetime = Int(onetmp as! NSNumber)
-            }
-        } catch {
-            //
-        }
-    }
+//    func queryOneTimes() {
+//        let onetime_query = PFQuery(className: "OneTimes")
+//        onetime_query.whereKey("username", equalTo:(currentUser?.username)!)
+//        do {
+//            let userArray = try onetime_query.findObjects()
+//            user = userArray[0]
+//            let onetmp = user["oneTime"]
+//            if(onetmp != nil) {
+//                onetime = Int(onetmp as! NSNumber)
+//            }
+//        } catch {
+//            //
+//        }
+//    }
     
     /*
     // MARK: - Navigation

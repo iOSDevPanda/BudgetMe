@@ -116,7 +116,7 @@ class SavingsViewController: UIViewController, UITableViewDataSource, UITableVie
             } else if(item.progress >= 0.5 && item.progress < 0.75) {
                 cell.textLabel?.textColor = UIColor.orangeColor()
             } else if(item.progress >= 0.75 && item.progress < 1) {
-                cell.textLabel?.textColor = UIColor.yellowColor()
+                cell.textLabel?.textColor = UIColor.orangeColor()
             } else if(item.progress >= 1) {
                 cell.textLabel?.textColor = UIColor.greenColor()
             }

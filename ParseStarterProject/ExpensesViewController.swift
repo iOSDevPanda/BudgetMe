@@ -62,13 +62,6 @@ class ExpensesViewController: UIViewController {
             tuition.text = String(user["tuitionAnnual"])
             tuition.text = String(convertFromUSD((Double(tuition.text!)!)))
             
-            // Calculating Total Expenses
-            foodData = Int(user["foodAnnual"] as! NSNumber)
-            rentData = Int(user["rentAnnual"] as! NSNumber)
-            gasData = Int(user["gasAnnual"] as! NSNumber)
-            tuitionData = Int(user["tuitionAnnual"] as! NSNumber)
-            
-            globExp = foodData + rentData + gasData + tuitionData
         }
         catch {
         }
@@ -101,6 +94,15 @@ class ExpensesViewController: UIViewController {
             let annual = tuitionExpenseType.selectedSegmentIndex == 0 ? Double(tuition.text!)! * MONTHS_IN_YEAR : Double(tuition.text!)
             user["tuitionAnnual"] = convertToUSD(Double(annual!))
         }
+        
+        // Calculating Total Expenses
+        foodData = Int(user["foodAnnual"] as! NSNumber)
+        rentData = Int(user["rentAnnual"] as! NSNumber)
+        gasData = Int(user["gasAnnual"] as! NSNumber)
+        tuitionData = Int(user["tuitionAnnual"] as! NSNumber)
+        
+        globExp = foodData + rentData + gasData + tuitionData
+        
         user.saveInBackgroundWithBlock {
             (success: Bool, error:NSError?) -> Void in
             if(success) {
