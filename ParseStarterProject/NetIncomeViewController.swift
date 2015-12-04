@@ -88,7 +88,7 @@ class NetIncomeViewController: UIViewController {
         moneyOut.text = "$\(globExp)"
         
         // subtract outflows from inflows
-        net = totIn - globExp + onetime
+        net = globIn - globExp + onetime
         
         moneyNet.text = "$\(net)"
         
@@ -163,18 +163,21 @@ class NetIncomeViewController: UIViewController {
     }
     
     // Should probably figure this out
-    //        let onetime_query = PFQuery(className: "OneTimes")
-    //        onetime_query.whereKey("username", equalTo:(currentUser?.username)!)
-    //        do {
-    //            let userArray = try onetime_query.findObjects()
-    //            user = userArray[0]
-    //            let onetmp = user["oneTime"]
-    //            if(onetmp != nil) {
-    //                onetime = Int(onetmp as! NSNumber)
-    //            }
-    //        } catch {
-    //            //
-    //        }
+    
+    func queryOneTimes() {
+        let onetime_query = PFQuery(className: "OneTimes")
+        onetime_query.whereKey("username", equalTo:(currentUser?.username)!)
+        do {
+            let userArray = try onetime_query.findObjects()
+            user = userArray[0]
+            let onetmp = user["oneTime"]
+            if(onetmp != nil) {
+                onetime = Int(onetmp as! NSNumber)
+            }
+        } catch {
+            //
+        }
+    }
     
     /*
     // MARK: - Navigation

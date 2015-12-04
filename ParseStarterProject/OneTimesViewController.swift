@@ -9,10 +9,14 @@
 import UIKit
 import Parse
 
+var globOneTime = 0
+
 class OneTimesViewController: UIViewController {
 
     @IBOutlet weak var currency: UILabel!
     @IBOutlet weak var amount: UITextField!
+    
+    var oneTimeData = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,6 +48,7 @@ class OneTimesViewController: UIViewController {
         oneTimes["username"] = currentUser?.username
         oneTimes["subAccount"] = currentAccount
         oneTimes["oneTime"] = convertToUSD(value)
+        
         oneTimes.saveInBackgroundWithBlock {
             (success: Bool, error:NSError?) -> Void in
             if(success) {

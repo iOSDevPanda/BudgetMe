@@ -44,7 +44,7 @@ class IncomesViewController: UIViewController {
             
             // Calculating Total Income
             salaryData = Int(user["salaryAnnual"] as! NSNumber)
-            scholarshipData = Int(user["scholarshipAnnual"] as! NSNumber)
+            scholarshipData = Int(user["scholarshipsAnnual"] as! NSNumber)
             
             globIn = salaryData + scholarshipData
         }
